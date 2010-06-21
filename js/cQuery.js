@@ -12,8 +12,10 @@
 var cQuery = function(elm){
 	var firstCharacter, body, elements;
 	
-	cQuery.DOMElements = [];//initialize empty array for selected DOM elements
-	
+//if the user didn't pass through an element to be selected, they are chaining or just trying to use a function, so don't re-select
+if(elm != undefined){	
+cQuery.DOMElements = [];//initialize empty array for selected DOM elements
+
 	body = document.getElementsByTagName("body")[0];
 	
 	firstCharacter = elm.charAt(0);
@@ -41,6 +43,7 @@ var cQuery = function(elm){
 		elements = body.getElementsByTagName(elm);
 		cQuery.DOMElements = elements;
 	}
+}
 	
 	return {
 		html:function(newHTML){
@@ -56,7 +59,7 @@ var cQuery = function(elm){
 					cQuery.DOMElements[i].innerHTML = newHTML;
 				}
 
-				return cQuery;
+				return cQuery();
 			}
 		}
 	};
