@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Conforming XHTML 1.0 Strict Template</title>
+    <script src="js/cQuery.js"></script>
+</head>
+
+<body>
+    <div id="test" class="classTest">Hello World</div>
+    <div class="classTest">replace me</div>
+    <p class="classTest">replace with class</p>
+
+<script type="text/javascript">
+
+_("#test").html(_("#test").html() + " we added this!");
+</script>
+
+</body>
+</html>
