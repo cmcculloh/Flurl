@@ -75,9 +75,82 @@ cQuery.html = function(newHTML){
 }
 
 cQuery.ajax = function(url, data, success, error){
-	alert("doing AJAX");
-	success();
+	var postVars, request;
+	
+	console.log('here');
+	
+	request = cQuery.createNewRequest();
+	
+	if(url === undefined){
+		return;
+	}
+	
+
+	if(typeof error === "function"){
+		error();
+	}
+
+	request.open("POST", url, true);
+	request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	
+	if(typeof success === "function"){
+		request.success = success;
+	}else{
+		//simple fail safe so we don't have to test success before we call it.
+		request.success = function(){};
+	}
+	
+	if(typeof error === "function"){
+		request.error = error;
+	}else{
+		//simple fail safe so we don't have to test error before we call it.
+		request.error = function(){};
+	}
+	
+	request.onreadystatechange = function(){
+		if(this.readyState == 4){
+			if(this.status == 200){
+				console.log('in on ready state changed');
+				this.success();
+			}else{
+				console.log("errored");
+				this.error();
+			}
+		}
+	}
+	
+	if(data !== undefined){
+		postVars;//loop through data and create postvars	
+	}
+	
+	request.send(postVars);
+	
+	console.log("down here");
 }
+
+cQuery.requests = [];
+
+cQuery.createNewRequest = function(){
+	var request;
+	
+	try{
+		request = new XMLHttpRequest();
+	}catch(trymicrosoft){
+		try{
+			request = new ActiveXObject("Msxml2.XMLHTTP");
+		}catch(othermicrosoft){
+			try{
+				request = new ActiveXObject("Microsoft.XMLHTTP");
+			}catch(failed){
+				return;
+			}
+		}
+	}
+	
+	cQuery.requests[cQuery.requests.length] = request;
+	
+	return request;
+};
 
 //make sure our library is exposed to the global namespace and make a shortcut "_" so we don't have to type cQuery every time.
 window.cQuery = window._ = cQuery;
