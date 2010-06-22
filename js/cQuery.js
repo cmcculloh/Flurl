@@ -77,8 +77,6 @@ cQuery.html = function(newHTML){
 cQuery.ajax = function(url, data, success, error){
 	var postVars, request;
 	
-	console.log('here');
-	
 	request = cQuery.createNewRequest();
 	
 	if(url === undefined){
@@ -110,22 +108,28 @@ cQuery.ajax = function(url, data, success, error){
 	request.onreadystatechange = function(){
 		if(this.readyState == 4){
 			if(this.status == 200){
-				console.log('in on ready state changed');
 				this.success();
 			}else{
-				console.log("errored");
 				this.error();
 			}
 		}
 	}
 	
+	postVars = "";
 	if(data !== undefined){
-		postVars;//loop through data and create postvars	
+		var count = 0;
+		//can only handle a JSON object one level deep.
+		for(key in data){
+			if(count > 0){
+				postVars += "&";
+			}
+			postVars += key + "=" + data[key];
+			
+			count++; 
+		}
 	}
 	
 	request.send(postVars);
-	
-	console.log("down here");
 }
 
 cQuery.requests = [];
