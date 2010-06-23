@@ -26,6 +26,9 @@ var cQuery = function(elm){
 		top:function(position){
 			return cQuery.top(position);
 		},
+		bottom:function(position){
+			return cQuery.bottom(position);
+		},
 		scrollDown:function(startPosition, stopPosition, speed, repeat){
 			return cQuery.scrollDown(startPosition, stopPosition, speed, repeat);
 		},
@@ -75,10 +78,22 @@ cQuery.height = function(){
 
 cQuery.top = function(position){
 	if(position === undefined){
-		return cQuery.DOMElements[0].style.top;
+		return cQuery.DOMElements[0].offsetTop;
 	}else{
 		for(var i = 0; i < cQuery.DOMElements.length; i++){
 			cQuery.DOMElements[i].style.top = position + "px";
+		}
+
+		return cQuery();		
+	}
+}
+
+cQuery.bottom = function(position){
+	if(position === undefined){
+		return cQuery.DOMElements[0].offsetTop + cQuery.height();
+	}else{
+		for(var i = 0; i < cQuery.DOMElements.length; i++){
+			cQuery.DOMElements[i].style.top = (position + cQuery.height()) + "px";
 		}
 
 		return cQuery();		
@@ -103,15 +118,15 @@ cQuery.scrollDown = function(startPosition, stopPosition, speed, repeat){
 					}
 					
 					//move the element
-					this.currentPosition = this.currentPosition + this.speed
+					this.currentPosition = this.currentPosition + this.speed;
 					//apply the move
-					this.element.style.top = this.currentPosition + "px";
-					
+					this.element.style.top = this.currentPosition - this.element.offsetHeight + "px";
+
 					//check to make sure it hasn't moved too far
 					if(this.currentPosition > this.stopPosition 
 						&& (this.repeat === "forever" || this.repeat < this.iteration)){
-						this.element.style.top = this.startPosition;
 						this.currentPosition = this.startPosition;
+						this.element.style.top = this.currentPosition - this.element.offsetHeight + "px";
 					}
 				},
 				"speed":speed,

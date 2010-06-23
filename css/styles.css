@@ -94,9 +94,14 @@ audio{
 	display: block;
 	position: absolute;
 	top: 0;
-	right: 50px;
+	left: 700px;
+	text-align: center;
 }
 
 img{
 	border: 0;
+}
+
+#loadingImg{
+	margin: 200px;
 }
