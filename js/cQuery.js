@@ -96,7 +96,6 @@ cQuery.runAnimations = function(){
 
 cQuery.scrollDown = function(startPosition, stopPosition, speed, repeat){
 		for(var i = 0; i < cQuery.DOMElements.length; i++){
-			console.log('in scrollDown');
 			cQuery.animations.push({
 				"animation":function(){
 					if(this.currentPosition === undefined){
@@ -108,12 +107,9 @@ cQuery.scrollDown = function(startPosition, stopPosition, speed, repeat){
 					//apply the move
 					this.element.style.top = this.currentPosition + "px";
 					
-					console.log(this.currentPosition);
-					
 					//check to make sure it hasn't moved too far
 					if(this.currentPosition > this.stopPosition 
 						&& (this.repeat === "forever" || this.repeat < this.iteration)){
-							console.log('restart');
 						this.element.style.top = this.startPosition;
 						this.currentPosition = this.startPosition;
 					}
