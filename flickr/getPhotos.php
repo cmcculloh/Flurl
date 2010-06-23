@@ -6,7 +6,7 @@ if($numPhotos < 1){
 }
 
 $flickr = new Flickr($numPhotos);
-print $flickr->displayPhotos();
+print json_encode($flickr->displayPhotos());
 
 class Flickr{
 	private $url;
@@ -35,7 +35,7 @@ class Flickr{
 
 	function displayPhotos(){
 		$photos = $this->getPhotos();
-		$output = "";
+		$output = array();
 		
 		//loop through photos array
 		for($i = 0; $i < $this->numPhotos; $i++){
@@ -46,6 +46,7 @@ class Flickr{
 			$secret = $photo["secret"];
 			$title = $photo["title"];
 			$userid = $photo["owner"];
+			$username = $photo["ownername"];
 			
 			$imgSrc = "http://farm{$farmid}.static.flickr.com/{$serverid}/{$id}_{$secret}.jpg";
 			$photoPageUrl = "http://www.flickr.com/photos/{$userid}/{$id}";
@@ -55,11 +56,11 @@ class Flickr{
 			$shortUrl = file_get_contents("http://qurl.com/automate.php?url=" . urlencode($photoPageUrl));
 			
 			//build HTML
-			$output .= <<<HERE
-				<a class="photo" href="$shortUrl">
-					<img src="$imgSrc" title="{$title}" alt="{$title}" />
-				</a>
-HERE;
+			$output[$i]["shortUrl"] = $shortUrl;
+			$output[$i]["imgSrc"] = $imgSrc;
+			$output[$i]["title"] = $title;
+			$output[$i]["userid"] = $userid;
+			$output[$i]["username"] = $username;
 		}
 
 		return $output;
