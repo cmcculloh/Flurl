@@ -8,7 +8,7 @@ var getPhotos = function(numberOfPhotos){
 			cQuery.animations = [];
 
 			//since it takes 30 seconds for this to run, call it again immediately
-			getPhotos(5);
+			getPhotos(10);
 
 
 			data = JSON.parse(data);
