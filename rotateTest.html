@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Conforming XHTML 1.0 Strict Template</title>
+    <style>
+    	@-webkit-keyframes turnit{
+    		from{
+    			-webkit-transform: rotate(0deg);
+    		}
+    		to{
+    			-webkit-transform: rotate(-364deg);
+    		}
+    	}
+
+		#turningBG{
+    		display:block;
+    		position:absolute;
+    		width: 3200px;
+    		height: 3200px;
+    		bottom:-1570px;
+    		left: -1180px;
+    		background: #fff url(media/rbwheel.gif) top right no-repeat;
+    		-webkit-animation-name: turnit;
+    		-webkit-animation-iteration-count: infinite;
+			-webkit-animation-duration: 30s;
+			-webkit-animation-timing-function: linear;
+    	}
+
+    	#BGContainer{
+    		width: 100%;
+    		height: 100%;
+    		display: block;
+    		position: absolute;
+    		top: 0;
+    		left: 0;
+    		overflow: hidden;
+    	}
+
+    	#unicorn{
+    		width: 100%;
+    		height: 100%;
+    		background: transparent url(media/ucBetter.gif) bottom left no-repeat;
+    		display: block;
+    		position: absolute;
+    		bottom: 0;
+    		left: 0;
+    	}
+    </style>
+</head>
+
+<body>
+    <div id="BGContainer">
+    	<div id="turningBG"></div>
+    	<div id="unicorn"></div>
+    </div>
+
+<script type="text/javascript">
+</script>
+
+</body>
+</html>

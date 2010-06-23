@@ -19,6 +19,18 @@ var cQuery = function(elm){
 	return {
 		html:function(newHTML){
 			return cQuery.html(newHTML);
+		},
+		height:function(){
+			return cQuery.height();
+		},
+		top:function(position){
+			return cQuery.top(position);
+		},
+		scrollDown:function(startPosition, stopPosition, speed, repeat){
+			return cQuery.scrollDown(startPosition, stopPosition, speed, repeat);
+		},
+		runAnimations:function(){
+			return cQuery.runAnimations();
 		}
 	};
 };
@@ -55,6 +67,68 @@ cQuery.DOMSelection = function(elm){
 		elements = body.getElementsByTagName(elm);
 		cQuery.DOMElements = elements;
 	}	
+}
+
+cQuery.height = function(){
+	return cQuery.DOMElements[0].offsetHeight;
+}
+
+cQuery.top = function(position){
+	if(position === undefined){
+		return cQuery.DOMElements[0].style.top;
+	}else{
+		for(var i = 0; i < cQuery.DOMElements.length; i++){
+			cQuery.DOMElements[i].style.top = position + "px";
+		}
+
+		return cQuery();		
+	}
+}
+
+cQuery.animations = [];
+setInterval("cQuery.runAnimations()", 100);
+
+cQuery.runAnimations = function(){
+	for(var i=0; i < cQuery.animations.length; i++){
+		cQuery.animations[i].animation();
+	}
+}
+
+cQuery.scrollDown = function(startPosition, stopPosition, speed, repeat){
+		for(var i = 0; i < cQuery.DOMElements.length; i++){
+			console.log('in scrollDown');
+			cQuery.animations.push({
+				"animation":function(){
+					if(this.currentPosition === undefined){
+						this.currentPosition = this.startPosition;
+					}
+					
+					//move the element
+					this.currentPosition = this.currentPosition + this.speed
+					//apply the move
+					this.element.style.top = this.currentPosition + "px";
+					
+					console.log(this.currentPosition);
+					
+					//check to make sure it hasn't moved too far
+					if(this.currentPosition > this.stopPosition 
+						&& (this.repeat === "forever" || this.repeat < this.iteration)){
+							console.log('restart');
+						this.element.style.top = this.startPosition;
+						this.currentPosition = this.startPosition;
+					}
+				},
+				"speed":speed,
+				"repeat":repeat,
+				"startPosition":startPosition,
+				"stopPosition":stopPosition,
+				"currentPosition":undefined,
+				"element":cQuery.DOMElements[i],
+				"iteration":0
+			});
+		}
+
+		return cQuery();	
 }
 
 cQuery.html = function(newHTML){
@@ -108,7 +182,7 @@ cQuery.ajax = function(url, data, success, error){
 	request.onreadystatechange = function(){
 		if(this.readyState == 4){
 			if(this.status == 200){
-				this.success();
+				this.success(this.responseText);
 			}else{
 				this.error();
 			}
