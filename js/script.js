@@ -8,7 +8,7 @@ var getPhotos = function(numberOfPhotos){
 			cQuery.animations = [];
 
 			//since it takes 30 seconds for this to run, call it again immediately
-			getPhotos(10);
+			setTimeout("getPhotos(5);", 10000);
 
 
 			data = JSON.parse(data);
@@ -27,7 +27,7 @@ var getPhotos = function(numberOfPhotos){
 			height = _("#pandaPhotos").height();
 			screenHeight = _("#BGContainer").height();
 
-			_("#pandaPhotos").bottom(0).scrollDown(0, (screenHeight + height), 8, "forever");
+			_("#pandaPhotos").bottom(0).scrollDown(0, (screenHeight + height), 5, "forever");
 		}
 	);	
 }

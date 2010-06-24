@@ -101,7 +101,7 @@ cQuery.bottom = function(position){
 }
 
 cQuery.animations = [];
-setInterval("cQuery.runAnimations()", 100);
+setInterval("cQuery.runAnimations()", 1);
 
 cQuery.runAnimations = function(){
 	for(var i=0; i < cQuery.animations.length; i++){
