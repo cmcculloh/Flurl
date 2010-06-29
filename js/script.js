@@ -61,6 +61,7 @@ FLURL.adjustContainerHeight = function(){
 
 FLURL.getURL = function(url){
 	_("h3").show();
+	_("#shortUrl").html("Loading...");
 	
 	_.ajax("http://chomperstomp.com/flurl/qurl/getUrl.php",
 		{"photoPageUrl":url},

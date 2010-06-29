@@ -108,11 +108,11 @@ cQuery.DOMSelection = function(elm){
 cQuery.height = function(newHeight){
 	if(newHeight !== undefined){
 		cQuery.DOMElements[0].style.height = newHeight + "px";
-		console.log("newHeight: " + newHeight);
-		console.log("styleHeight: " + cQuery.DOMElements[0].style.height);
 	}else{
 		return cQuery.DOMElements[0].offsetHeight;	
 	}
+	
+	return cQuery();
 }
 
 cQuery.top = function(position){

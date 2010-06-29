@@ -114,6 +114,7 @@ audio{
 img{
 	border: 0;
 	margin-top: 20px;
+	cursor: pointer;
 }
 
 #loadingImg{
