@@ -12,7 +12,7 @@
 var cQuery = function(elm){
 	//if the user didn't pass through an element to be selected, they are chaining or just trying to use a function, so don't re-select
 	if(elm != undefined){
-		cQuery.DOMSelection(elm);
+		return cQuery.DOMSelection(elm);
 	}
 	
 	//enable chaining by adding shortcut references to other cQuery functions
@@ -20,8 +20,8 @@ var cQuery = function(elm){
 		html:function(newHTML){
 			return cQuery.html(newHTML);
 		},
-		height:function(){
-			return cQuery.height();
+		height:function(newHeight){
+			return cQuery.height(newHeight);
 		},
 		top:function(position){
 			return cQuery.top(position);
@@ -34,9 +34,40 @@ var cQuery = function(elm){
 		},
 		runAnimations:function(){
 			return cQuery.runAnimations();
+		},
+		getElements:function(){
+			return cQuery.getElements();
+		},
+		show:function(){
+			return cQuery.show();
+		},
+		attr:function(attrName, newVal){
+			return cQuery.attr(attrName, newVal);
 		}
 	};
 };
+
+cQuery.attr = function(attrName, newVal){
+	if(attrName === "href"){
+		if(newVal !== undefined){
+			cQuery.DOMElements[0].href = newVal;
+		}else{
+			return cQuery.DOMElements[0].href;
+		}
+	}
+	
+	return cQuery();
+}
+
+cQuery.show = function(){
+	cQuery.DOMElements[0].style.display = "block";
+	
+	return cQuery();
+}
+
+cQuery.getElements = function(){
+	return cQuery.DOMElements;
+}
 
 cQuery.DOMSelection = function(elm){
 	var firstCharacter, body, elements;
@@ -69,11 +100,19 @@ cQuery.DOMSelection = function(elm){
 		//select by tagName
 		elements = body.getElementsByTagName(elm);
 		cQuery.DOMElements = elements;
-	}	
+	}
+	
+	return cQuery();
 }
 
-cQuery.height = function(){
-	return cQuery.DOMElements[0].offsetHeight;
+cQuery.height = function(newHeight){
+	if(newHeight !== undefined){
+		cQuery.DOMElements[0].style.height = newHeight + "px";
+		console.log("newHeight: " + newHeight);
+		console.log("styleHeight: " + cQuery.DOMElements[0].style.height);
+	}else{
+		return cQuery.DOMElements[0].offsetHeight;	
+	}
 }
 
 cQuery.top = function(position){

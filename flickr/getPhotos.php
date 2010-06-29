@@ -38,29 +38,15 @@ class Flickr{
 		$output = array();
 		
 		//loop through photos array
-		for($i = 0; $i < $this->numPhotos; $i++){
+		for($i = 0, $numPhotos = count($photos); $i < $numPhotos; $i++){
 			$photo = $photos[$i];
-			$farmid = $photo["farm"];
-			$serverid = $photo["server"];
-			$id = $photo["id"];
-			$secret = $photo["secret"];
-			$title = $photo["title"];
-			$userid = $photo["owner"];
-			$username = $photo["ownername"];
 			
-			$imgSrc = "http://farm{$farmid}.static.flickr.com/{$serverid}/{$id}_{$secret}.jpg";
-			$photoPageUrl = "http://www.flickr.com/photos/{$userid}/{$id}";
+			$imgSrc = "http://farm{$photo['farm']}.static.flickr.com/{$photo['server']}/{$photo['id']}_{$photo['secret']}_m.jpg";
+			$photoPageUrl = "http://www.flickr.com/photos/{$photo['ownername']}/{$photo['id']}";
+			$photo["imgSrc"] = $imgSrc;
+			$photo["photoPageUrl"] = $photoPageUrl;			
 			
-			
-			//shorten URL using Qurl
-			$shortUrl = file_get_contents("http://qurl.com/automate.php?url=" . urlencode($photoPageUrl));
-			
-			//build HTML
-			$output[$i]["shortUrl"] = $shortUrl;
-			$output[$i]["imgSrc"] = $imgSrc;
-			$output[$i]["title"] = $title;
-			$output[$i]["userid"] = $userid;
-			$output[$i]["username"] = $username;
+			$output[$i] = $photo;
 		}
 
 		return $output;
@@ -71,18 +57,9 @@ class Flickr{
 		
 		$rsp_obj = unserialize($rsp);
 
-		#
-		# display the photo title (or an error if it failed)
-		#
 		if ($rsp_obj['stat'] == 'ok'){
-			//$photo_title = $rsp_obj['photos']['photo'][0]['title'];
-		
-			//echo "Title is $photo_title!";
-			
 			return $rsp_obj['photos']['photo'];
 		}else{
-			//echo "Call failed!";
-			
 			//just make and return an empty array;
 			$photos = array();
 			
