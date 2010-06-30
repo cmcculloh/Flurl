@@ -42,7 +42,7 @@ class Flickr{
 			$photo = $photos[$i];
 			
 			$imgSrc = "http://farm{$photo['farm']}.static.flickr.com/{$photo['server']}/{$photo['id']}_{$photo['secret']}_m.jpg";
-			$photoPageUrl = "http://www.flickr.com/photos/{$photo['ownername']}/{$photo['id']}";
+			$photoPageUrl = "http://www.flickr.com/photos/{$photo['owner']}/{$photo['id']}";
 			$photo["imgSrc"] = $imgSrc;
 			$photo["photoPageUrl"] = $photoPageUrl;			
 			
