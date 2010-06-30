@@ -36,7 +36,7 @@ FLURL.getPhotos = function(numberOfPhotos){
 			height = _("#pandaPhotos").height();
 			screenHeight = _("#BGContainer").height();
 
-			_("#pandaPhotos").bottom(screenHeight).scrollDown((screenHeight * -1), (screenHeight + height), 5, "forever");
+			_("#pandaPhotos").bottom(screenHeight).scrollDown((screenHeight * -1), (screenHeight + height), 4, "forever");
 		}
 	);	
 }
